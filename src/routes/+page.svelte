@@ -1,8 +1,10 @@
 <script lang="ts">
 	import HeatMap from '../components/HeatMap.svelte';
 	import { trpcServer } from '$lib/trpc';
+	import Spinner from '../components/Spinner.svelte';
 
 	export let data;
+	let isFetching = false;
 
 	interface DateRange {
 		start: Date;
@@ -64,22 +66,23 @@
 		const target = e.target as HTMLSelectElement;
 		const selectedOption = datePickerOptions.find((option) => option.key === target.value);
 		selectedDateRange = selectedOption?.key || '';
-	
+
 		if (selectedOption) {
 			FetchData(selectedOption.value);
 		}
 	}
 
 	async function FetchData(dateRange: DateRange) {
+		isFetching = true;
 		const logsResponse = await trpcServer(fetch).logs.getLog.query({
 			start: dateRange.start,
 			end: dateRange.end
 		});
-		data.logs = logsResponse
+		data.logs = logsResponse;
+		isFetching = false;
 	}
 
-	$: logs = data.logs
-
+	$: logs = data.logs;
 </script>
 
 <main class="py-4 h-full w-full bg-[#F4F4F4]">
@@ -101,11 +104,15 @@
 				</select>
 			</div>
 		</div>
-		<div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6">
+		<div class="w-full min-h-[50vh] p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6">
 			<h5 class="mb-3 text-base font-semibold text-gray-900 md:text-sm">
 				Unique Destination Heatmap
 			</h5>
-			<HeatMap data={logs} />
+			{ #if isFetching }
+				<Spinner />
+			{:else}
+				<HeatMap data={logs} />
+			{/if}
 		</div>
 	</div>
 </main>
