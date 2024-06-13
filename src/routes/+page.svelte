@@ -1,5 +1,6 @@
 <script lang="ts">
 	import HeatMap from '../components/HeatMap.svelte';
+	import { trpcServer } from '$lib/trpc';
 
 	export let data;
 
@@ -13,7 +14,6 @@
 		key: string;
 		value: DateRange;
 	}
-
 
 	let datePickerOptions: PickerOption[] = [
 		{
@@ -60,11 +60,25 @@
 
 	let selectedDateRange: string = datePickerOptions[0].key;
 
-	function handleDateChange(e: Event) {
+	async function handleDateChange(e: Event) {
 		const target = e.target as HTMLSelectElement;
 		const selectedOption = datePickerOptions.find((option) => option.key === target.value);
 		selectedDateRange = selectedOption?.key || '';
+	
+		if (selectedOption) {
+			FetchData(selectedOption.value);
+		}
 	}
+
+	async function FetchData(dateRange: DateRange) {
+		const logsResponse = await trpcServer(fetch).logs.getLog.query({
+			start: dateRange.start,
+			end: dateRange.end
+		});
+		data.logs = logsResponse
+	}
+
+	$: logs = data.logs
 
 </script>
 
@@ -91,7 +105,7 @@
 			<h5 class="mb-3 text-base font-semibold text-gray-900 md:text-sm">
 				Unique Destination Heatmap
 			</h5>
-			<HeatMap data={data.logs} />
+			<HeatMap data={logs} />
 		</div>
 	</div>
 </main>
