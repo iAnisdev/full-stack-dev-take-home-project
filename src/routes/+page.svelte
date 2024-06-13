@@ -1,4 +1,8 @@
 <script lang="ts">
+	import HeatMap from '../components/HeatMap.svelte';
+
+	export let data;
+
 	interface DateRange {
 		start: Date;
 		end: Date;
@@ -62,7 +66,6 @@
 		selectedDateRange = selectedOption?.key || '';
 	}
 
-	export let data;
 </script>
 
 <main class="py-4 h-full w-full bg-[#F4F4F4]">
@@ -88,6 +91,7 @@
 			<h5 class="mb-3 text-base font-semibold text-gray-900 md:text-sm">
 				Unique Destination Heatmap
 			</h5>
+			<HeatMap data={data.logs} />
 		</div>
 	</div>
 </main>
