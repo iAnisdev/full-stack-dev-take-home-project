@@ -6,6 +6,7 @@
 	import { axisBottom, axisLeft } from 'd3-axis';
 	import { max } from 'd3-array';
 	import 'd3-transition'; 
+	import { browser } from '$app/environment';
 
 	export let data;
 	let svgContainer;
@@ -106,13 +107,15 @@
 	};
 
 	const drawResponsiveHeatmap = () => {
+		if(browser){
 		select(svgContainer).selectAll('*').remove();
 
-		const containerWidth = svgContainer.clientWidth;
-		const containerHeight = svgContainer.clientHeight;
+		const containerWidth = svgContainer && svgContainer.clientWidth;
+		const containerHeight =svgContainer &&  svgContainer.clientHeight;
 
 		const sortedData = sortDataByHour(data);
 		drawHeatmap(sortedData, containerWidth, containerHeight);
+		}
 	};
 
 	onMount(() => {
@@ -123,6 +126,9 @@
 			window.removeEventListener('resize', drawResponsiveHeatmap);
 		};
 	});
+
+	$: data  , drawResponsiveHeatmap();
+
 </script>
 
 <div class="w-full h-96 p-4">
