@@ -2,12 +2,12 @@ import { trpcServer } from '$lib/trpc';
 
 export async function load({ fetch }) {
 	try {
-		const logLogsResponse = await trpcServer(fetch).logs.getLog.query({
+		const logsResponse = await trpcServer(fetch).logs.getLog.query({
 			start: new Date(new Date().setDate(new Date().getDate() - 7)),
 			end: new Date()
 		});
 		return {
-			logs: logLogsResponse
+			logs: logsResponse
 		};
 	} catch (e) {
 		console.error(e);
