@@ -1,6 +1,6 @@
 <header>
 	<nav class="bg-white py-3.5 shadow-md">
-		<div class="flex flex-wrap justify-start items-center mx-auto max-w-screen-xl">
+		<div class="flex flex-wrap justify-start items-center mx-auto px-8">
 			<svg
 				width="176"
 				height="32"

@@ -86,7 +86,7 @@
 </script>
 
 <main class="py-4 h-full w-full bg-[#F4F4F4]">
-	<div class="flex flex-wrap justify-start items-center mx-auto max-w-screen-xl py-8">
+	<div class="flex flex-wrap justify-start items-center mx-auto px-10 py-8">
 		<div class="flex justify-between w-full py-8">
 			<div>
 				<p class="text-black text-2xl font-semibold">Web Traffics</p>
