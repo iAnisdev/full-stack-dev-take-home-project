@@ -10,6 +10,7 @@
 		value: DateRange;
 	}
 
+
 	let datePickerOptions: PickerOption[] = [
 		{
 			label: 'Last week',
@@ -60,6 +61,8 @@
 		const selectedOption = datePickerOptions.find((option) => option.key === target.value);
 		selectedDateRange = selectedOption?.key || '';
 	}
+
+	export let data;
 </script>
 
 <main class="py-4 h-full w-full bg-[#F4F4F4]">
@@ -80,6 +83,11 @@
 					{/each}
 				</select>
 			</div>
+		</div>
+		<div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6">
+			<h5 class="mb-3 text-base font-semibold text-gray-900 md:text-sm">
+				Unique Destination Heatmap
+			</h5>
 		</div>
 	</div>
 </main>
