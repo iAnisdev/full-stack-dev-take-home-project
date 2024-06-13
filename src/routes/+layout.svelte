@@ -4,6 +4,10 @@
 	import Footer from '../components/Footer.svelte';
 </script>
 
+<svelte:head>
+	<title>Web Traffic</title>
+</svelte:head>
+
 <Header />
 <slot />
 <Footer />
